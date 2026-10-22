@@ -1,0 +1,32 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roman's Pizza | 12" Weekend Pizzas in Plymouth, MI</title>
+<meta name="description" content="Roman's Pizza: hand-stretched 12-inch pizzas, made to order for weekend pickup in Plymouth, MI.">
+<meta property="og:title" content="Roman's Pizza"><meta property="og:image" content="img/hero.jpg">
+<meta name="theme-color" content="#16110e"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="img/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head><body>
+<header class="top"><a href="#home" class="logo" data-name>Roman's Pizza</a>
+<nav><a href="#menu">Menu</a><a href="#how">How it works</a><a href="#order" class="btn sm">Order</a></nav></header>
+<section id="home" class="hero"><div class="hero-img"></div><div class="hero-in">
+<p class="eyebrow" data-area>Plymouth, MI</p><h1 class="neon" data-name>Roman's Pizza</h1>
+<p class="lead" data-tagline>Hand-stretched 12" pies, made to order for your weekend.</p>
+<div class="cta"><a href="#order" class="btn">Order for this weekend</a><a href="#menu" class="btn ghost">See the menu</a></div></div></section>
+<section id="menu" class="wrap"><h2><span data-name>Roman's Pizza</span> Menu</h2><p class="sub">Every pie is 12 inches, baked fresh the day you pick up.</p><div id="menuGrid" class="grid"></div></section>
+<section id="how" class="wrap"><h2>How it works</h2><ol class="steps">
+<li><b>1</b><div><h3>Pick your pies</h3><p>Choose how many of each below.</p></div></li>
+<li><b>2</b><div><h3>Order by <span data-deadline>Thursday</span></h3><p>Send the message so dough can rest and rise.</p></div></li>
+<li><b>3</b><div><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></div></li></ol></section>
+<section id="order" class="wrap"><h2>Order</h2><p class="sub">Build your order, then send it. It takes a minute.</p>
+<div id="qtys" class="qtys"></div>
+<div class="count" id="count">0 pizzas</div>
+<div class="form"><label>Pickup day</label><div class="seg" id="day"><button data-d="Saturday" class="on">Saturday</button><button data-d="Sunday">Sunday</button></div>
+<label for="time">Pickup time</label><select id="time"></select>
+<label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name">
+<label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123"></div>
+<label>Your message</label><textarea id="msg" readonly rows="5"></textarea>
+<div class="send"><a id="sms" class="btn">Text it</a><a id="mail" class="btn ghost">Email it</a><button id="copy" class="btn ghost">Copy message</button></div>
+<p class="hint" id="hint"></p></section>
+<footer><p class="neon-s" data-name>Roman's Pizza</p><p data-area>Plymouth, MI</p><p id="socials"></p><p class="small">© <span id="yr"></span> <span data-name>Roman's Pizza</span>. Weekend orders only.</p></footer>
+<div id="toast"></div>
+<script src="config.js"></script><script src="app.js"></script></body></html>
