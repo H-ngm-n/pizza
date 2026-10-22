@@ -8,6 +8,12 @@ window.PIZZA_CONFIG = {
   orderDeadline: "Thursday",
   pickupTimes: ["12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"],
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden
+  // Pie options. The first item in each list is the default ("Regular") and is left out of the message.
+  options: {
+    crust:  ["Regular", "Thin", "Thick", "Sesame"],
+    cheese: ["Regular", "Extra", "Light", "No cheese"],
+    sauce:  ["Regular", "Extra", "Light", "No sauce"]
+  },
   // Price per 12" pizza in dollars. null = prices hidden everywhere.
   prices: {
     "pepperoni": null,

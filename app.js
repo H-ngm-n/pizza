@@ -14,19 +14,29 @@ if(C.orderDeadline)document.querySelectorAll("[data-deadline]").forEach(e=>e.tex
 $("#yr").textContent=new Date().getFullYear();
 const pr=id=>(C.prices||{})[id];
 $("#menuGrid").innerHTML=PIES.map(p=>`<article class="card"><img src="img/${p.id}.jpg" alt="${p.n} pizza" loading="lazy"><div class="b"><h3>${p.n}<span class="price">${money(pr(p.id))}</span></h3><p>${p.d}</p></div></article>`).join("");
-const q={};PIES.forEach(p=>q[p.id]=0);
-$("#qtys").innerHTML=PIES.map(p=>`<div class="q"><img src="img/${p.id}.jpg" alt=""><div class="n">${p.n}<small>12"${pr(p.id)!=null?" · "+money(pr(p.id)):""}</small></div><div class="st"><button aria-label="Less ${p.n}" data-m="${p.id}">−</button><span id="q-${p.id}">0</span><button aria-label="More ${p.n}" data-p="${p.id}">+</button></div></div>`).join("");
+const O=Object.assign({crust:["Regular"],cheese:["Regular","Extra","Light","No cheese"],sauce:["Regular","Extra","Light","No sauce"]},C.options||{});
+const lines=[];let qn=1;const opt=a=>a.map(x=>`<option>${x}</option>`).join("");
+$("#pie").innerHTML=PIES.map(p=>`<option value="${p.id}">${p.n}${pr(p.id)!=null?" · "+money(pr(p.id)):""}</option>`).join("");
+["crust","cheese","sauce"].forEach(k=>$("#o-"+k).innerHTML=opt(O[k]));
+$("#qm").onclick=()=>{qn=Math.max(1,qn-1);$("#qn").textContent=qn};$("#qp").onclick=()=>{qn=Math.min(50,qn+1);$("#qn").textContent=qn};
+function desc(l){const d=[];if(l.crust!==O.crust[0])d.push(l.crust.toLowerCase()+" crust");
+if(l.cheese!==O.cheese[0])d.push(/^no /i.test(l.cheese)?l.cheese.toLowerCase():l.cheese.toLowerCase()+" cheese");
+if(l.sauce!==O.sauce[0])d.push(/^no /i.test(l.sauce)?l.sauce.toLowerCase():l.sauce.toLowerCase()+" sauce");return d.length?d.join(", "):"regular"}
+$("#add").onclick=()=>{const l={id:$("#pie").value,crust:$("#o-crust").value,cheese:$("#o-cheese").value,sauce:$("#o-sauce").value,qty:qn};
+const same=lines.find(x=>x.id==l.id&&x.crust==l.crust&&x.cheese==l.cheese&&x.sauce==l.sauce);if(same)same.qty+=l.qty;else lines.push(l);
+qn=1;$("#qn").textContent=1;["crust","cheese","sauce"].forEach(k=>$("#o-"+k).selectedIndex=0);render();toast("Added to order")};
+function render(){$("#lines").innerHTML=lines.length?lines.map((l,i)=>{const p=PIES.find(x=>x.id==l.id);return `<li><img src="img/${p.id}.jpg" alt=""><div class="n"><b>${l.qty} × ${p.n}</b><small>${desc(l)}</small></div><button class="rm" data-i="${i}" aria-label="Remove">Remove</button></li>`}).join(""):'<li class="empty">Nothing yet. Build a pie above and tap Add to order.</li>';upd()}
+$("#lines").onclick=e=>{const b=e.target.closest(".rm");if(b){lines.splice(+b.dataset.i,1);render()}};
 const times=C.pickupTimes||["12:00 PM","3:00 PM","6:00 PM"];$("#time").innerHTML=times.map(t=>`<option>${t}</option>`).join("");
 let day="Saturday";
 document.querySelectorAll("#day button").forEach(b=>b.onclick=()=>{day=b.dataset.d;document.querySelectorAll("#day button").forEach(x=>x.classList.toggle("on",x===b));upd()});
-$("#qtys").onclick=e=>{const b=e.target.closest("button");if(!b)return;const id=b.dataset.p||b.dataset.m;q[id]=Math.max(0,Math.min(50,q[id]+(b.dataset.p?1:-1)));$("#q-"+id).textContent=q[id];upd()};
 ["#nm","#ph","#time"].forEach(s=>$(s).addEventListener("input",upd));
-function build(){const items=PIES.filter(p=>q[p.id]).map(p=>`${q[p.id]} ${p.n}`);if(!items.length)return"";
+function build(){const items=lines.map(l=>`${l.qty} ${PIES.find(p=>p.id==l.id).n} (${desc(l)})`);if(!items.length)return"";
 const who=[$("#nm").value.trim(),$("#ph").value.trim()].filter(Boolean).join(", ");
 return `Hi! I'd like to order from ${NAME} for ${day} at ${$("#time").value}: ${items.join(", ")}${who?" — "+who:""}`}
-function upd(){const n=Object.values(q).reduce((a,b)=>a+b,0);let t=n+(n==1?" pizza":" pizzas");
-const tot=PIES.reduce((a,p)=>pr(p.id)==null?a:a+pr(p.id)*q[p.id],0);if(n&&PIES.every(p=>!q[p.id]||pr(p.id)!=null)&&tot)t+=" · "+money(tot);
-$("#count").textContent=t;const m=build();$("#msg").value=m||"Add some pizzas above and your message appears here.";
+function upd(){const n=lines.reduce((a,l)=>a+l.qty,0);let t=n+(n==1?" pizza":" pizzas");
+const tot=lines.reduce((a,l)=>a+(pr(l.id)||0)*l.qty,0);if(n&&lines.every(l=>pr(l.id)!=null)&&tot)t+=" · "+money(tot);
+$("#count").textContent=t;const m=build();$("#msg").value=m||"Add some pizzas to your order and your message appears here.";
 const ok=!!m,ph=(C.phone||"").replace(/[^\d+]/g,"");
 $("#sms").hidden=!ph;$("#mail").hidden=!C.email;
 $("#sms").href=ph?`sms:${ph}${/iPhone|iPad/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(m)}`:"#";
@@ -34,6 +44,7 @@ $("#mail").href=C.email?`mailto:${C.email}?subject=${encodeURIComponent("Pizza o
 ["#sms","#mail","#copy"].forEach(s=>$(s).classList.toggle("off",!ok));
 $("#hint").textContent=(!ph&&!C.email)?`Copy the message and send it to ${NAME} however you usually reach us.`:"";}
 $("#copy").onclick=async()=>{const m=build();if(!m)return;try{await navigator.clipboard.writeText(m)}catch(e){$("#msg").select();document.execCommand("copy")}
-const t=$("#toast");t.textContent="Message copied!";t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)};
+toast("Message copied!")};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 const S=C.socials||{};$("#socials").innerHTML=Object.entries(S).filter(([k,v])=>v).map(([k,v])=>`<a href="${v}" target="_blank" rel="noopener">${k[0].toUpperCase()+k.slice(1)}</a>`).join(" · ");
-upd();
+render();

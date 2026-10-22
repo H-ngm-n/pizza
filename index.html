@@ -18,7 +18,10 @@
 <li><b>2</b><div><h3>Order by <span data-deadline>Thursday</span></h3><p>Send the message so dough can rest and rise.</p></div></li>
 <li><b>3</b><div><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></div></li></ol></section>
 <section id="order" class="wrap"><h2>Order</h2><p class="sub">Build your order, then send it. It takes a minute.</p>
-<div id="qtys" class="qtys"></div>
+<div class="builder"><label for="pie">Pizza</label><select id="pie"></select>
+<div class="opts"><div><label for="o-crust">Crust</label><select id="o-crust"></select></div><div><label for="o-cheese">Cheese</label><select id="o-cheese"></select></div><div><label for="o-sauce">Sauce</label><select id="o-sauce"></select></div></div>
+<label>Quantity</label><div class="addrow"><div class="st"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></div><button id="add" class="btn">Add to order</button></div></div>
+<h3 class="yo">Your order</h3><ul id="lines" class="lines"></ul>
 <div class="count" id="count">0 pizzas</div>
 <div class="form"><label>Pickup day</label><div class="seg" id="day"><button data-d="Saturday" class="on">Saturday</button><button data-d="Sunday">Sunday</button></div>
 <label for="time">Pickup time</label><select id="time"></select>

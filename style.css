@@ -31,3 +31,7 @@ textarea{resize:none;color:var(--glow)}.seg{display:flex;gap:10px}.seg button{fl
 .neon-s{font-family:Pacifico,cursive;font-size:32px;color:#ffe3d1;text-shadow:0 0 14px #ff8a5c;margin:0}.small{font-size:15px}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--teal);color:#08201c;font-weight:900;padding:12px 20px;border-radius:12px;opacity:0;transition:.3s;pointer-events:none}#toast.show{opacity:1}
 [hidden]{display:none!important}
+.builder{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:4px 18px 20px}.opts{display:grid;gap:0 12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.addrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.addrow .btn{flex:1}.yo{margin:28px 0 10px}.lines{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.lines li{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px}.lines img{width:52px;height:52px;border-radius:50%}
+.lines .n{flex:1}.lines small{display:block;color:var(--mut)}.lines .rm{background:none;border:2px solid var(--line);color:var(--txt);border-radius:12px;padding:8px 12px;font:700 15px Nunito;cursor:pointer}.empty{color:var(--mut)}
