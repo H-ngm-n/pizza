@@ -42,9 +42,10 @@ $("#sms").hidden=!ph;$("#mail").hidden=!C.email;
 $("#sms").href=ph?`sms:${ph}${/iPhone|iPad/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(m)}`:"#";
 $("#mail").href=C.email?`mailto:${C.email}?subject=${encodeURIComponent("Pizza order for "+day)}&body=${encodeURIComponent(m)}`:"#";
 ["#sms","#mail","#copy"].forEach(s=>$(s).classList.toggle("off",!ok));
-$("#hint").textContent=(!ph&&!C.email)?`Copy the message and send it to ${NAME} however you usually reach us.`:"";}
+$("#hint").textContent=C.email?`Or copy the message and email it to ${C.email}.`:(!ph?`Copy the message and send it to ${NAME} however you usually reach us.`:"");}
 $("#copy").onclick=async()=>{const m=build();if(!m)return;try{await navigator.clipboard.writeText(m)}catch(e){$("#msg").select();document.execCommand("copy")}
 toast("Message copied!")};
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 const S=C.socials||{};$("#socials").innerHTML=Object.entries(S).filter(([k,v])=>v).map(([k,v])=>`<a href="${v}" target="_blank" rel="noopener">${k[0].toUpperCase()+k.slice(1)}</a>`).join(" · ");
 render();
+if(C.email){const e=$("#femail");e.textContent=C.email;e.href="mailto:"+C.email;e.hidden=false}
