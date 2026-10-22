@@ -10,7 +10,7 @@ window.PIZZA_CONFIG = {
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden
   // Pie options. The first item in each list is the default ("Regular") and is left out of the message.
   options: {
-    crust:  ["Regular", "Thin", "Thick", "Sesame"],
+    crust:  ["Regular", "Sesame"],
     cheese: ["Regular", "Extra", "Light", "No cheese"],
     sauce:  ["Regular", "Extra", "Light", "No sauce"]
   },
