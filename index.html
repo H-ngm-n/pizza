@@ -3,35 +3,33 @@
 <title>Roman's Pizza | 12" Weekend Pizzas in Plymouth, MI</title>
 <meta name="description" content="Roman's Pizza: hand-stretched 12-inch pizzas, made to order for weekend pickup in Plymouth, MI.">
 <meta property="og:title" content="Roman's Pizza"><meta property="og:image" content="img/hero.jpg">
-<meta name="theme-color" content="#f6f4ef"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="img/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#16110e"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="img/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"></head><body>
 <header class="top"><a href="#home" class="logo" data-name>Roman's Pizza</a>
-<nav><a href="#menu">Menu</a><a href="#how">How it works</a><a href="#order" class="navcta">Order</a></nav></header>
-<section id="home" class="hero wrap">
-<p class="eyebrow"><span data-area>Plymouth, MI</span> · Weekends only</p>
-<h1><span data-name>Roman's Pizza</span></h1>
+<nav><a href="#menu">Menu</a><a href="#how">How it works</a><a href="#order" class="btn sm">Order</a></nav></header>
+<section id="home" class="hero"><div class="hero-img"></div><div class="hero-in">
+<p class="eyebrow" data-area>Plymouth, MI</p><h1 class="neon" data-name>Roman's Pizza</h1>
 <p class="lead" data-tagline>Hand-stretched 12" pies, made to order for your weekend.</p>
-<div class="cta"><a href="#order" class="btn">Request pizzas</a><a href="#menu" class="link">View menu →</a></div>
-<figure class="hero-img"><img src="img/hero.jpg" alt="Fresh pepperoni pizzas"></figure></section>
-<section id="menu" class="wrap"><div class="sechead"><span class="num">01</span><h2><span data-name>Roman's Pizza</span> Menu</h2></div>
-<p class="sub">All pies are 12 inches and baked fresh for pickup.</p><ul id="menuGrid" class="menu"></ul></section>
-<section id="how" class="wrap"><div class="sechead"><span class="num">02</span><h2>How it works</h2></div><ol class="steps">
-<li><span>1</span><h3>Build your pies</h3><p>Pick the pizza, crust, cheese and sauce.</p></li>
-<li><span>2</span><h3>Request by <span data-deadline>Thursday</span></h3><p>That gives the dough time to rest and rise.</p></li>
-<li><span>3</span><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></li></ol></section>
-<section id="order" class="wrap"><div class="sechead"><span class="num">03</span><h2>Request an order</h2></div>
-<div class="cols"><div class="builder"><label for="pie">Pizza</label><select id="pie"></select>
+<div class="cta"><a href="#order" class="btn">Order for this weekend</a><a href="#menu" class="btn ghost">See the menu</a></div></div></section>
+<section id="menu" class="wrap"><h2><span data-name>Roman's Pizza</span> Menu</h2><p class="sub">Every pie is 12 inches, baked fresh the day you pick up.</p><div id="menuGrid" class="grid"></div></section>
+<section id="how" class="wrap"><h2>How it works</h2><ol class="steps">
+<li><b>1</b><div><h3>Pick your pies</h3><p>Choose how many of each below.</p></div></li>
+<li><b>2</b><div><h3>Order by <span data-deadline>Thursday</span></h3><p>Send the message so dough can rest and rise.</p></div></li>
+<li><b>3</b><div><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></div></li></ol></section>
+<section id="order" class="wrap"><h2>Order</h2><p class="sub">Build your order, then send it. It takes a minute.</p>
+<div class="builder"><label for="pie">Pizza</label><select id="pie"></select>
 <div class="opts"><div><label for="o-crust">Crust</label><select id="o-crust"></select></div><div><label for="o-cheese">Cheese</label><select id="o-cheese"></select></div><div><label for="o-sauce">Sauce</label><select id="o-sauce"></select></div></div>
 <label>Quantity</label><div class="addrow"><div class="st"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></div><button id="add" class="btn">Add to order</button></div></div>
-<div class="summary"><h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul>
-<label>Pickup day</label><div class="seg" id="day"><button data-d="Saturday" class="on">Saturday</button><button data-d="Sunday">Sunday</button></div>
+<h3 class="yo">Your order</h3><ul id="lines" class="lines"></ul>
+<div class="count" id="count">0 pizzas</div>
+<div class="form"><label>Pickup day</label><div class="seg" id="day"><button data-d="Saturday" class="on">Saturday</button><button data-d="Sunday">Sunday</button></div>
 <label for="time">Pickup time</label><select id="time"></select>
 <label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name">
-<label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123">
-<label>Message preview</label><textarea id="msg" readonly rows="5"></textarea>
-<div class="send"><a id="mail" class="btn">Send pizza request</a><a id="sms" class="btn ghost">Text it</a><button id="copy" class="btn ghost">Copy message</button></div>
-<p class="hint" id="hint"></p></div></div></section>
-<footer class="wrap"><p class="flogo" data-name>Roman's Pizza</p><p><span data-area>Plymouth, MI</span> · <a id="femail" hidden></a></p><p id="socials"></p><p class="small">© <span id="yr"></span> <span data-name>Roman's Pizza</span>. Weekend orders only.</p></footer>
+<label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123"></div>
+<label>Your message</label><textarea id="msg" readonly rows="5"></textarea>
+<div class="send"><a id="sms" class="btn">Text it</a><a id="mail" class="btn ghost">Email it</a><button id="copy" class="btn ghost">Copy message</button></div>
+<p class="hint" id="hint"></p></section>
+<footer><p class="neon-s" data-name>Roman's Pizza</p><p data-area>Plymouth, MI</p><p><a id="femail" hidden></a></p><p id="socials"></p><p class="small">© <span id="yr"></span> <span data-name>Roman's Pizza</span>. Weekend orders only.</p></footer>
 <div id="toast"></div>
 <script src="config.js"></script><script src="app.js"></script></body></html>
