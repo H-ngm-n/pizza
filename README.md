@@ -14,3 +14,9 @@ Static site (GitHub Pages). All editable info is in **`config.js`**.
 - `area` / `tagline`: optional.
 
 With no phone or email, customers can still use **Copy message**.
+
+## Adding photos
+1. Put your pizza photos in the `/photos` folder (square 1:1 on the off-white #f6f4ef background works best; WebP or JPG, under ~300 KB).
+2. List them in `config.js` under `photos`, e.g.
+   `photos: [{ src: "photos/pepperoni.jpg", caption: "Pepperoni" }, { src: "photos/margherita.jpg" }]`
+   Caption is optional. While the list is empty, the "From the oven" section stays hidden.
