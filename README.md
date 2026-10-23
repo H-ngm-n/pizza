@@ -22,6 +22,6 @@ With no phone or email, customers can still use **Copy message**.
    Caption is optional. While the list is empty, the "From the oven" section stays hidden.
 
 ## Online order form (FormSubmit.co)
-Orders post to `formEndpoint` in config.js (`https://formsubmit.co/ajax/rplichota51@gmail.com`), no backend needed.
-**The first real order triggers a one-time activation email from FormSubmit to rplichota51@gmail.com. Click the link in it, or orders won't be delivered.** Until then (or if the service fails) customers see an error with Copy message / Email it fallbacks.
+Orders post to `formEndpoint` in config.js (`https://formsubmit.co/ajax/romanspizzaplymouth@outlook.com`), no backend needed.
+**The first real order triggers a one-time activation email from FormSubmit to romanspizzaplymouth@outlook.com. Click the link in it, or orders won't be delivered.** Until then (or if the service fails) customers see an error with Copy message / Email it fallbacks.
 `pickupNote` sets the pickup-only text.

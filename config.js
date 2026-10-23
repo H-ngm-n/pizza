@@ -4,9 +4,9 @@ window.PIZZA_CONFIG = {
   tagline: "Hand-stretched 12\" pies, made to order for your weekend.",
   area: "Plymouth, MI",
   phone: "",        // e.g. "7345551234" — enables the "Text it" button
-  email: "rplichota51@gmail.com",        // e.g. "you@example.com" — enables the "Email it" button
+  email: "romanspizzaplymouth@outlook.com",        // e.g. "you@example.com" — enables the "Email it" button
   // Online order form (FormSubmit.co, no backend). First real submission sends a one-time activation email to this address.
-  formEndpoint: "https://formsubmit.co/ajax/rplichota51@gmail.com",
+  formEndpoint: "https://formsubmit.co/ajax/romanspizzaplymouth@outlook.com",
   pickupNote: "Pickup only · Plymouth, MI",
   orderDeadline: "Thursday",
   pickupTimes: ["12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"],
