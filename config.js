@@ -37,8 +37,8 @@ window.PIZZA_CONFIG = {
     "cheese":                { pepperoni: false, toppings: [] },
     "margherita":            { pepperoni: false, toppings: [] },
     "pepperoni":             { pepperoni: true,  toppings: [] },
-    "pep-hot-honey":         { pepperoni: true,  toppings: ["hot honey"] },
-    "pep-hot-honey-ricotta": { pepperoni: true,  toppings: ["hot honey", "ricotta"] }
+    "pep-hot-honey":         { pepperoni: true,  toppings: [] },
+    "pep-hot-honey-ricotta": { pepperoni: true,  toppings: ["ricotta"] }
   },
   // Build your own: pick any of these toppings. Pepperoni uses pepperoniBase; others add perTopping each.
   byoToppings: ["Pepperoni", "Banana peppers", "Onion"]
