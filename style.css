@@ -65,3 +65,4 @@ footer{border-top:1px solid var(--ink);padding-top:40px;padding-bottom:60px;colo
 
 .mitem,.pclick{cursor:pointer;border-radius:4px;transition:background .15s}.mitem:hover,.pclick:hover{background:rgba(210,63,31,.05)}.mitem:hover h3{color:#d23f1f}.mitem:focus-visible,.pclick:focus-visible{outline:2px solid #d23f1f;outline-offset:4px}
 #photoGrid figure.hl{outline:3px solid #d23f1f;outline-offset:4px;background:rgba(210,63,31,.07)}
+.wd{display:flex;align-items:center;gap:12px;margin:12px 0 0}.wd[hidden]{display:none}.wd img{width:72px;height:72px;object-fit:contain;flex:none}.wd figcaption{font-size:.85rem;color:#666}

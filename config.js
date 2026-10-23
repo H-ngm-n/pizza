@@ -29,10 +29,13 @@ window.PIZZA_CONFIG = {
   // Pie options. The first item in each list is the default ("Regular") and is left out of the message.
   options: {
     crust:  ["Regular", "Sesame"],
+    bake:   ["Regular", "Well done"],
     cheese: ["Regular", "Extra", "Light", "No cheese"],
     sauce:  ["Regular", "Extra", "Light", "No sauce"],
     pepperoni: ["Regular", "Extra", "Light"]   // only shown on pepperoni pies
   },
+  // Reference thumbnail shown in the builder when Bake = "Well done".
+  wellDonePhoto: "photos/pepperoni-charred.webp",
   // Pricing rules (dollars). Crust/cheese/sauce/pepperoni-amount choices never change the price.
   // Price = (has pepperoni ? pepperoniBase : base) + perTopping x (toppings other than pepperoni).
   pricing: { base: 14.99, pepperoniBase: 15.99, perTopping: 1.00 },
