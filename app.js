@@ -28,21 +28,49 @@ qn=1;$("#qn").textContent=1;["crust","cheese","sauce"].forEach(k=>$("#o-"+k).sel
 function render(){$("#lines").innerHTML=lines.length?lines.map((l,i)=>{const p=PIES.find(x=>x.id==l.id);return `<li><div class="n"><b>${l.qty} × ${p.n}</b><small>${desc(l)}</small></div><button class="rm" data-i="${i}" aria-label="Remove">Remove</button></li>`}).join(""):'<li class="empty">Nothing yet. Build a pie and tap Add to order.</li>';upd()}
 $("#lines").onclick=e=>{const b=e.target.closest(".rm");if(b){lines.splice(+b.dataset.i,1);render()}};
 const times=C.pickupTimes||["12:00 PM","3:00 PM","6:00 PM"];$("#time").innerHTML=times.map(t=>`<option>${t}</option>`).join("");
-let day="Saturday";
+let day="Saturday";const mode=()=>document.querySelector('input[name=mode]:checked').value;
 document.querySelectorAll("#day button").forEach(b=>b.onclick=()=>{day=b.dataset.d;document.querySelectorAll("#day button").forEach(x=>x.classList.toggle("on",x===b));upd()});
-["#nm","#ph","#time"].forEach(s=>$(s).addEventListener("input",upd));
-function build(){const items=lines.map(l=>`${l.qty} ${PIES.find(p=>p.id==l.id).n} (${desc(l)})`);if(!items.length)return"";
-const who=[$("#nm").value.trim(),$("#ph").value.trim()].filter(Boolean).join(", ");
-return `Hi! I'd like to order from ${NAME} for ${day} at ${$("#time").value}: ${items.join(", ")}${who?" — "+who:""}`}
+if(C.deliveryNote)$("#darea").textContent=C.deliveryNote;
+document.querySelectorAll("input[name=mode]").forEach(r=>r.onchange=()=>{const d=mode()=="Delivery";$("#delivery").hidden=!d;
+document.querySelectorAll("#mode .radio").forEach(l=>l.classList.toggle("on",l.querySelector("input").checked));upd()});
+["#nm","#ph","#time","#street","#city","#zip","#notes"].forEach(s=>$(s).addEventListener("input",()=>{const er=$("#e-"+s.slice(1));if(er){er.textContent="";$(s).classList.remove("bad")}upd()}));
+const addr=()=>[$("#street").value.trim(),$("#city").value.trim(),$("#zip").value.trim()].filter(Boolean).join(", ");
+const itemsTxt=()=>lines.map(l=>`${l.qty} ${PIES.find(p=>p.id==l.id).n} (${desc(l)})`);
+function build(){const items=itemsTxt();if(!items.length)return"";
+const who=[$("#nm").value.trim(),$("#ph").value.trim()].filter(Boolean).join(", ");const dl=mode()=="Delivery";
+const n=$("#notes").value.trim();
+return `Hi! I'd like to order from ${NAME} for ${dl?"delivery":"pickup"} on ${day} at ${$("#time").value}: ${items.join(", ")}${dl&&addr()?". Deliver to: "+addr():""}${n?". Notes: "+n:""}${who?" — "+who:""}`}
 function upd(){const n=lines.reduce((a,l)=>a+l.qty,0);let t=n+(n==1?" pizza":" pizzas");
 const tot=lines.reduce((a,l)=>a+(pr(l.id)||0)*l.qty,0);if(n&&lines.every(l=>pr(l.id)!=null)&&tot)t+=" · "+money(tot);
-$("#count").textContent=t;const m=build();$("#msg").value=m||"Add some pizzas to your order and your message appears here.";
-const ok=!!m,ph=(C.phone||"").replace(/[^\d+]/g,"");
-$("#sms").hidden=!ph;$("#mail").hidden=!C.email;
+$("#count").textContent=t;if(n)$("#e-lines").textContent="";const m=build();$("#msg").value=m;
+const ph=(C.phone||"").replace(/[^\d+]/g,"");$("#sms").hidden=!ph;$("#mail").hidden=!C.email;
 $("#sms").href=ph?`sms:${ph}${/iPhone|iPad/.test(navigator.userAgent)?"&":"?"}body=${encodeURIComponent(m)}`:"#";
-$("#mail").href=C.email?`mailto:${C.email}?subject=${encodeURIComponent("Pizza request for "+day+" · "+NAME)}&body=${encodeURIComponent(m)}`:"#";
-["#sms","#mail","#copy"].forEach(s=>$(s).classList.toggle("off",!ok));
-$("#hint").textContent=C.email?`Or copy the message and email it to ${C.email}.`:(!ph?`Copy the message and send it to ${NAME} however you usually reach us.`:"");}
+$("#mail").href=C.email?`mailto:${C.email}?subject=${encodeURIComponent("Pizza order for "+day+" · "+NAME)}&body=${encodeURIComponent(m)}`:"#";
+$("#hint").textContent=C.email?`Or email it to ${C.email}.`:"";}
+function err(id,msg){$("#e-"+id).textContent=msg;if(msg&&$("#"+id))$("#"+id).classList.add("bad");return !msg}
+function validate(){let ok=true,first=null;const chk=(id,msg,el)=>{if(!err(id,msg)){ok=false;first=first||el}};
+chk("lines",lines.length?"":"Add at least one pizza to your order.",$("#pie"));
+const nm=$("#nm").value.trim();chk("nm",nm.length<2?"Please enter your name.":"",$("#nm"));
+const pd=$("#ph").value.replace(/\D/g,"");chk("ph",pd.length<10||pd.length>11?"Please enter a valid phone number.":"",$("#ph"));
+if(mode()=="Delivery"){chk("street",$("#street").value.trim()?"":"Street address is required for delivery.",$("#street"));
+chk("city",$("#city").value.trim()?"":"City is required.",$("#city"));chk("zip",/^\d{5}(-\d{4})?$/.test($("#zip").value.trim())?"":"Enter a 5-digit ZIP.",$("#zip"))}
+if(first){first.focus();first.scrollIntoView({block:"center"})}return ok}
+function payload(){const nm=$("#nm").value.trim(),dl=mode()=="Delivery";const p={
+_subject:`New pizza order – ${nm}`,_template:"table",_captcha:"false",_honey:$("#honey").value,
+Name:nm,Phone:$("#ph").value.trim(),"Pickup or delivery":mode(),"Preferred day":day,"Preferred time":$("#time").value,
+Pizzas:itemsTxt().join("\n"),"Total pizzas":String(lines.reduce((a,l)=>a+l.qty,0))};
+if(dl){p["Delivery address"]=addr()}p["Special instructions"]=$("#notes").value.trim()||"None";return p}
+$("#orderForm").onsubmit=async e=>{e.preventDefault();$("#fail").hidden=true;if(!validate())return;
+if($("#honey").value)return;const b=$("#place");b.disabled=true;b.classList.add("loading");b.textContent="Sending…";const p=payload();
+try{const r=await fetch(C.formEndpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(p)});
+const j=await r.json().catch(()=>({}));if(!r.ok||j.success===false||j.success==="false")throw new Error(j.message||r.status);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
+$("#sumry").innerHTML=`<ul class="lines">${lines.map(l=>`<li><div class="n"><b>${l.qty} × ${PIES.find(x=>x.id==l.id).n}</b><small>${desc(l)}</small></div></li>`).join("")}</ul>
+<dl class="dl"><dt>${p["Pickup or delivery"]}</dt><dd>${esc(day)}, ${esc(p["Preferred time"])}${p["Delivery address"]?"<br>"+esc(p["Delivery address"]):""}</dd><dt>Name</dt><dd>${esc(p.Name)}</dd><dt>Phone</dt><dd>${esc(p.Phone)}</dd>${p["Special instructions"]!="None"?`<dt>Notes</dt><dd>${esc(p["Special instructions"])}</dd>`:""}</dl>`;
+$("#orderForm").hidden=true;$("#done").hidden=false;$("#done").scrollIntoView({block:"start"});scrollBy(0,-80)}
+catch(x){upd();$("#fail").hidden=false;$("#fail").scrollIntoView({block:"center"})}
+finally{b.disabled=false;b.classList.remove("loading");b.textContent="Place order"}};
+$("#again").onclick=()=>{lines.length=0;$("#orderForm").reset();$("#delivery").hidden=true;document.querySelectorAll("#mode .radio").forEach(l=>l.classList.toggle("on",l.querySelector("input").checked));render();$("#done").hidden=true;$("#orderForm").hidden=false};
 $("#copy").onclick=async()=>{const m=build();if(!m)return;try{await navigator.clipboard.writeText(m)}catch(e){$("#msg").select();document.execCommand("copy")}
 toast("Message copied!")};
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}

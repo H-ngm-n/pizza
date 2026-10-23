@@ -20,3 +20,8 @@ With no phone or email, customers can still use **Copy message**.
 2. List them in `config.js` under `photos`, e.g.
    `photos: [{ src: "photos/pepperoni.jpg", caption: "Pepperoni" }, { src: "photos/margherita.jpg" }]`
    Caption is optional. While the list is empty, the "From the oven" section stays hidden.
+
+## Online order form (FormSubmit.co)
+Orders post to `formEndpoint` in config.js (`https://formsubmit.co/ajax/rplichota51@gmail.com`), no backend needed.
+**The first real order triggers a one-time activation email from FormSubmit to rplichota51@gmail.com. Click the link in it, or orders won't be delivered.** Until then (or if the service fails) customers see an error with Copy message / Email it fallbacks.
+`deliveryNote` sets the delivery-area text.

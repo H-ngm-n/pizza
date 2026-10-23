@@ -21,18 +21,29 @@
 <li><span>1</span><h3>Build your pies</h3><p>Pick the pizza, crust, cheese and sauce.</p></li>
 <li><span>2</span><h3>Request by <span data-deadline>Thursday</span></h3><p>That gives the dough time to rest and rise.</p></li>
 <li><span>3</span><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></li></ol></section>
-<section id="order" class="wrap"><div class="sechead"><span class="num">04</span><h2>Request an order</h2></div>
+<section id="order" class="wrap"><div class="sechead"><span class="num">04</span><h2>Order online</h2></div>
 <div class="cols"><div class="builder"><label for="pie">Pizza</label><select id="pie"></select>
 <div class="opts"><div><label for="o-crust">Crust</label><select id="o-crust"></select></div><div><label for="o-cheese">Cheese</label><select id="o-cheese"></select></div><div><label for="o-sauce">Sauce</label><select id="o-sauce"></select></div></div>
 <label>Quantity</label><div class="addrow"><div class="st"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></div><button id="add" class="btn">Add to order</button></div></div>
-<div class="summary"><h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul>
-<label>Pickup day</label><div class="seg" id="day"><button data-d="Saturday" class="on">Saturday</button><button data-d="Sunday">Sunday</button></div>
-<label for="time">Pickup time</label><select id="time"></select>
-<label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name">
-<label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123">
-<label>Message preview</label><textarea id="msg" readonly rows="5"></textarea>
-<div class="send"><a id="mail" class="btn">Send pizza request</a><a id="sms" class="btn ghost">Text it</a><button id="copy" class="btn ghost">Copy message</button></div>
-<p class="hint" id="hint"></p></div></div></section>
+<form class="summary" id="orderForm" novalidate>
+<h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul><p class="err" id="e-lines"></p>
+<fieldset class="ff"><legend>Pickup or delivery</legend><div class="seg" id="mode"><label class="radio on"><input type="radio" name="mode" value="Pickup" checked>Pickup</label><label class="radio"><input type="radio" name="mode" value="Delivery">Delivery</label></div></fieldset>
+<div id="delivery" hidden><p class="note" id="darea">Delivery area: Plymouth, MI and nearby</p>
+<label for="street">Street address</label><input id="street" autocomplete="address-line1" placeholder="123 Main St"><p class="err" id="e-street"></p>
+<div class="two"><div><label for="city">City</label><input id="city" autocomplete="address-level2" placeholder="Plymouth"><p class="err" id="e-city"></p></div>
+<div><label for="zip">ZIP</label><input id="zip" inputmode="numeric" autocomplete="postal-code" placeholder="48170"><p class="err" id="e-zip"></p></div></div></div>
+<label><span id="daylbl">Preferred day</span></label><div class="seg" id="day"><button type="button" data-d="Saturday" class="on">Saturday</button><button type="button" data-d="Sunday">Sunday</button></div>
+<label for="time">Preferred time</label><select id="time"></select>
+<label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name" required><p class="err" id="e-nm"></p>
+<label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123" required><p class="err" id="e-ph"></p>
+<label for="notes">Special instructions</label><textarea id="notes" rows="3" placeholder="Allergies, cut style, anything else (optional)"></textarea>
+<input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+<button type="submit" id="place" class="btn place">Place order</button>
+<div id="fail" class="fail" hidden><p><b>Sorry, the order didn't go through.</b> You can still send it yourself:</p><textarea id="msg" readonly rows="5"></textarea>
+<div class="send"><button type="button" id="copy" class="btn ghost">Copy message</button><a id="mail" class="btn ghost">Email it instead</a><a id="sms" class="btn ghost" hidden>Text it</a></div><p class="hint" id="hint"></p></div>
+</form>
+<div id="done" class="done" hidden><h3>Order sent!</h3><p>Roman will text you to confirm.</p><div id="sumry"></div><button type="button" id="again" class="link btnlink">Start a new order</button></div>
+</div></div></section>
 <footer class="wrap"><p class="flogo" data-name>Roman's Pizza</p><p><span data-area>Plymouth, MI</span> · <a id="femail" hidden></a></p><p id="socials"></p><p class="small">© <span id="yr"></span> <span data-name>Roman's Pizza</span>. Weekend orders only.</p></footer>
 <div id="toast"></div>
 <script src="config.js"></script><script src="app.js"></script></body></html>

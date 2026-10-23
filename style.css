@@ -44,3 +44,15 @@ footer{border-top:1px solid var(--ink);padding-top:40px;padding-bottom:60px;colo
 .pgrid figcaption{font-size:14px;color:var(--mut);margin-top:8px}
 .pgrid img{object-position:center;background:#e4e1da}
 .pgrid img{aspect-ratio:1;object-fit:contain;background:#f6f4ef;border-radius:0}.pgrid figcaption{text-align:center}
+.ff{border:0;padding:0;margin:0}.ff legend{font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;color:var(--mut);margin:22px 0 8px;padding:0}
+.radio{flex:1;display:flex;justify-content:center;align-items:center;padding:12px;border-radius:999px;border:1px solid var(--line);font:500 16px Inter;cursor:pointer;margin:0;text-transform:none;letter-spacing:0;color:var(--ink)}
+.radio input{position:absolute;opacity:0;pointer-events:none}.radio.on{background:var(--ink);color:#fff;border-color:var(--ink)}.radio:focus-within{outline:2px solid var(--acc);outline-offset:2px}
+.note{margin:18px 0 0;font-size:15px;color:var(--mut);border-left:2px solid var(--acc);padding-left:12px}
+.two{display:grid;grid-template-columns:2fr 1fr;gap:0 18px}#notes{border:0;border-bottom:1px solid var(--ink);padding:10px 0;color:var(--ink);font-size:18px}
+.err{color:var(--acc);font-size:14px;margin:6px 0 0;min-height:0}.err:empty{display:none}input.bad{border-color:var(--acc)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.place{width:100%;margin-top:30px;font-size:18px;padding:17px}.place.loading{opacity:.7;cursor:progress}.place:disabled{pointer-events:none}
+.fail{margin-top:24px;border-top:1px solid var(--acc);padding-top:16px}.fail p{margin:0 0 10px;font-size:16px}
+.done{border-top:1px solid var(--ink);padding-top:22px}.done h3{font-size:34px;margin:0;color:var(--acc)}.done>p{margin:6px 0 20px;font-size:19px}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:10px 20px;margin:20px 0 26px}.dl dt{color:var(--mut);font-size:14px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;padding-top:2px}.dl dd{margin:0}
+.btnlink{background:none;border:0;border-bottom:1px solid var(--ink);padding:0;font:600 17px Inter;cursor:pointer;color:var(--ink)}

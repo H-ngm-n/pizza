@@ -5,6 +5,9 @@ window.PIZZA_CONFIG = {
   area: "Plymouth, MI",
   phone: "",        // e.g. "7345551234" — enables the "Text it" button
   email: "rplichota51@gmail.com",        // e.g. "you@example.com" — enables the "Email it" button
+  // Online order form (FormSubmit.co, no backend). First real submission sends a one-time activation email to this address.
+  formEndpoint: "https://formsubmit.co/ajax/rplichota51@gmail.com",
+  deliveryNote: "Delivery area: Plymouth, MI and nearby",
   orderDeadline: "Thursday",
   pickupTimes: ["12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"],
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden
