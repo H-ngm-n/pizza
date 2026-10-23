@@ -7,7 +7,7 @@ window.PIZZA_CONFIG = {
   email: "rplichota51@gmail.com",        // e.g. "you@example.com" — enables the "Email it" button
   // Online order form (FormSubmit.co, no backend). First real submission sends a one-time activation email to this address.
   formEndpoint: "https://formsubmit.co/ajax/rplichota51@gmail.com",
-  deliveryNote: "Delivery area: Plymouth, MI and nearby",
+  pickupNote: "Pickup only · Plymouth, MI",
   orderDeadline: "Thursday",
   pickupTimes: ["12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"],
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden
@@ -26,14 +26,20 @@ window.PIZZA_CONFIG = {
   options: {
     crust:  ["Regular", "Sesame"],
     cheese: ["Regular", "Extra", "Light", "No cheese"],
-    sauce:  ["Regular", "Extra", "Light", "No sauce"]
+    sauce:  ["Regular", "Extra", "Light", "No sauce"],
+    pepperoni: ["Regular", "Extra", "Light"]   // only shown on pepperoni pies
   },
-  // Price per 12" pizza in dollars. null = prices hidden everywhere.
-  prices: {
-    "pepperoni": null,
-    "pep-hot-honey": null,
-    "pep-hot-honey-ricotta": null,
-    "margherita": null,
-    "cheese": null
-  }
+  // Pricing rules (dollars). Crust/cheese/sauce/pepperoni-amount choices never change the price.
+  // Price = (has pepperoni ? pepperoniBase : base) + perTopping x (toppings other than pepperoni).
+  pricing: { base: 14.99, pepperoniBase: 15.99, perTopping: 0.99 },
+  // What's on each menu pie, for pricing. "toppings" = extra toppings besides pepperoni.
+  pies: {
+    "cheese":                { pepperoni: false, toppings: [] },
+    "margherita":            { pepperoni: false, toppings: [] },
+    "pepperoni":             { pepperoni: true,  toppings: [] },
+    "pep-hot-honey":         { pepperoni: true,  toppings: ["hot honey"] },
+    "pep-hot-honey-ricotta": { pepperoni: true,  toppings: ["hot honey", "ricotta"] }
+  },
+  // Build your own: pick any of these toppings. Pepperoni uses pepperoniBase; others add perTopping each.
+  byoToppings: ["Pepperoni", "Banana peppers", "Onion"]
 };

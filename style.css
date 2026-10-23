@@ -56,3 +56,9 @@ footer{border-top:1px solid var(--ink);padding-top:40px;padding-bottom:60px;colo
 .done{border-top:1px solid var(--ink);padding-top:22px}.done h3{font-size:34px;margin:0;color:var(--acc)}.done>p{margin:6px 0 20px;font-size:19px}
 .dl{display:grid;grid-template-columns:auto 1fr;gap:10px 20px;margin:20px 0 26px}.dl dt{color:var(--mut);font-size:14px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;padding-top:2px}.dl dd{margin:0}
 .btnlink{background:none;border:0;border-bottom:1px solid var(--ink);padding:0;font:600 17px Inter;cursor:pointer;color:var(--ink)}
+.tops{display:flex;flex-wrap:wrap;gap:10px}.chk{display:flex;align-items:center;gap:8px;margin:0;padding:10px 16px;border:1px solid var(--line);border-radius:999px;font:500 16px Inter;text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer}
+.chk input{accent-color:var(--acc);width:18px;height:18px;margin:0}.chk.on{border-color:var(--ink)}
+.unit{margin:24px 0 0;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;color:var(--mut)}.unit b{color:var(--ink);font-size:20px}
+.lt{font-weight:600;white-space:nowrap}.total{display:flex;justify-content:space-between;margin:14px 0 0;font-size:18px}.total b{font-size:22px;color:var(--acc)}
+#pnote{margin-top:24px}
+.chk input{-webkit-appearance:checkbox;appearance:auto;border:0;padding:0;width:18px;flex:none}

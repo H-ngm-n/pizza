@@ -23,17 +23,15 @@
 <li><span>3</span><h3>Pick up on the weekend</h3><p>Saturday or Sunday, at the time you choose.</p></li></ol></section>
 <section id="order" class="wrap"><div class="sechead"><span class="num">04</span><h2>Order online</h2></div>
 <div class="cols"><div class="builder"><label for="pie">Pizza</label><select id="pie"></select>
-<div class="opts"><div><label for="o-crust">Crust</label><select id="o-crust"></select></div><div><label for="o-cheese">Cheese</label><select id="o-cheese"></select></div><div><label for="o-sauce">Sauce</label><select id="o-sauce"></select></div></div>
+<div class="opts"><div><label for="o-crust">Crust</label><select id="o-crust"></select></div><div><label for="o-cheese">Cheese</label><select id="o-cheese"></select></div><div><label for="o-sauce">Sauce</label><select id="o-sauce"></select></div><div id="pepwrap" hidden><label for="o-pepperoni">Pepperoni</label><select id="o-pepperoni"></select></div></div>
+<fieldset class="ff" id="byo" hidden><legend>Toppings</legend><div class="tops" id="tops"></div></fieldset>
+<p class="unit">Price per pizza <b id="unit"></b></p>
 <label>Quantity</label><div class="addrow"><div class="st"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></div><button id="add" class="btn">Add to order</button></div></div>
 <form class="summary" id="orderForm" novalidate>
-<h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul><p class="err" id="e-lines"></p>
-<fieldset class="ff"><legend>Pickup or delivery</legend><div class="seg" id="mode"><label class="radio on"><input type="radio" name="mode" value="Pickup" checked>Pickup</label><label class="radio"><input type="radio" name="mode" value="Delivery">Delivery</label></div></fieldset>
-<div id="delivery" hidden><p class="note" id="darea">Delivery area: Plymouth, MI and nearby</p>
-<label for="street">Street address</label><input id="street" autocomplete="address-line1" placeholder="123 Main St"><p class="err" id="e-street"></p>
-<div class="two"><div><label for="city">City</label><input id="city" autocomplete="address-level2" placeholder="Plymouth"><p class="err" id="e-city"></p></div>
-<div><label for="zip">ZIP</label><input id="zip" inputmode="numeric" autocomplete="postal-code" placeholder="48170"><p class="err" id="e-zip"></p></div></div></div>
-<label><span id="daylbl">Preferred day</span></label><div class="seg" id="day"><button type="button" data-d="Saturday" class="on">Saturday</button><button type="button" data-d="Sunday">Sunday</button></div>
-<label for="time">Preferred time</label><select id="time"></select>
+<h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul><p class="total" id="totalRow" hidden>Order total <b id="total"></b></p><p class="err" id="e-lines"></p>
+<p class="note" id="pnote">Pickup only · Plymouth, MI</p>
+<label>Preferred pickup day</label><div class="seg" id="day"><button type="button" data-d="Saturday" class="on">Saturday</button><button type="button" data-d="Sunday">Sunday</button></div>
+<label for="time">Preferred pickup time</label><select id="time"></select>
 <label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name" required><p class="err" id="e-nm"></p>
 <label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123" required><p class="err" id="e-ph"></p>
 <label for="notes">Special instructions</label><textarea id="notes" rows="3" placeholder="Allergies, cut style, anything else (optional)"></textarea>
