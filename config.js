@@ -8,6 +8,9 @@ window.PIZZA_CONFIG = {
   // Online order form (FormSubmit.co, no backend). First real submission sends a one-time activation email to this address.
   formEndpoint: "https://formsubmit.co/ajax/romanspizzaplymouth@outlook.com",
   pickupNote: "Pickup only · Plymouth, MI",
+  pickupAddress: "[Pickup address to be added]",
+  // One oven, limited dough: max pizzas per order (and the intended max per weekend day).
+  maxPerDay: 10,
   orderDeadline: "Thursday",
   pickupTimes: ["12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM"],
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden

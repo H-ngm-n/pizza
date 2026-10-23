@@ -29,8 +29,8 @@
 <label>Quantity</label><div class="addrow"><div class="st"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></div><button id="add" class="btn">Add to order</button></div></div>
 <form class="summary" id="orderForm" novalidate>
 <h3 class="yo">Your order <span class="count" id="count">0 pizzas</span></h3><ul id="lines" class="lines"></ul><p class="total" id="totalRow" hidden>Order total <b id="total"></b></p><p class="err" id="e-lines"></p>
-<p class="note" id="pnote">Pickup only · Plymouth, MI</p>
-<label>Preferred pickup day</label><div class="seg" id="day"><button type="button" data-d="Saturday" class="on">Saturday</button><button type="button" data-d="Sunday">Sunday</button></div>
+<p class="note" id="pnote">Pickup only · Plymouth, MI</p><p class="note" id="paddr"></p>
+<label>Preferred pickup day</label><div class="seg" id="day"></div>
 <label for="time">Preferred pickup time</label><select id="time"></select>
 <label for="nm">Your name</label><input id="nm" autocomplete="name" placeholder="First and last name" required><p class="err" id="e-nm"></p>
 <label for="ph">Your phone</label><input id="ph" type="tel" autocomplete="tel" placeholder="(734) 555-0123" required><p class="err" id="e-ph"></p>
