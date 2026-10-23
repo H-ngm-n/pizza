@@ -13,14 +13,15 @@ window.PIZZA_CONFIG = {
   socials: { instagram: "", facebook: "", tiktok: "" }, // full URLs; blank = hidden
   // Real pizza photos. Drop files into /photos and list them here; empty = section hidden.
   // e.g. { src: "photos/pepperoni.jpg", caption: "Pepperoni, fresh out" }
+  // Optional: pie (menu id) makes the photo clickable: adds 1 (with optional crust). pie "byo" + tops preselects the builder instead.
   photos: [
-    { src: "photos/pepperoni-ricotta.webp", caption: "Pepperoni hot honey ricotta" },
-    { src: "photos/pepperoni-charred.webp", caption: "Pepperoni" },
-    { src: "photos/cheese-sesame.webp", caption: "Cheese, sesame crust" },
-    { src: "photos/thin-pepperoni.webp", caption: "Thin pepperoni" },
-    { src: "photos/pepperoni-2.webp", caption: "Pepperoni" },
-    { src: "photos/pepperoni-banana-peppers.webp", caption: "Pepperoni and banana peppers" },
-    { src: "photos/pepperoni-oblong.webp", caption: "Pepperoni" }
+    { src: "photos/pepperoni-ricotta.webp", caption: "Pepperoni hot honey ricotta", pie: "pep-hot-honey-ricotta" },
+    { src: "photos/pepperoni-charred.webp", caption: "Pepperoni", pie: "pepperoni" },
+    { src: "photos/cheese-sesame.webp", caption: "Cheese, sesame crust", pie: "cheese", crust: "Sesame" },
+    { src: "photos/thin-pepperoni.webp", caption: "Thin pepperoni", pie: "pepperoni" },
+    { src: "photos/pepperoni-2.webp", caption: "Pepperoni", pie: "pepperoni" },
+    { src: "photos/pepperoni-banana-peppers.webp", caption: "Pepperoni and banana peppers", pie: "byo", tops: ["Pepperoni", "Banana peppers"] },
+    { src: "photos/pepperoni-oblong.webp", caption: "Pepperoni", pie: "pepperoni" }
   ],
   // Pie options. The first item in each list is the default ("Regular") and is left out of the message.
   options: {

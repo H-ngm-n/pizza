@@ -19,7 +19,7 @@ const isPep=(id,tops)=>id=="byo"?(tops||[]).includes("Pepperoni"):!!(RCP[id]&&RC
 function unitPrice(id,tops){if(id=="byo"){const t=tops||[];return r2((t.includes("Pepperoni")?P.pepperoniBase:P.base)+P.perTopping*t.filter(x=>x!="Pepperoni").length)}
 const r=RCP[id]||{};return r2((r.pepperoni?P.pepperoniBase:P.base)+P.perTopping*(r.toppings||[]).length)}
 const pr=id=>id=="byo"?unitPrice("byo",[]):unitPrice(id);
-$("#menuGrid").innerHTML=PIES.map(p=>`<li><div><div class="mrow"><h3>${p.n}</h3><span class="dots"></span><span class="mprice">${p.id=="byo"?"from "+money(pr(p.id)):money(pr(p.id))}</span></div><p>${p.d}</p></div></li>`).join("");
+$("#menuGrid").innerHTML=PIES.map(p=>`<li><div class="mitem" role="button" tabindex="0" data-pie="${p.id}" aria-label="${p.id=="byo"?"Build your own pizza":"See "+p.n}"><div class="mrow"><h3>${p.n}</h3><span class="dots"></span><span class="mprice">${p.id=="byo"?"from "+money(pr(p.id)):money(pr(p.id))}</span></div><p>${p.d}</p></div></li>`).join("");
 const O=Object.assign({crust:["Regular"],cheese:["Regular","Extra","Light","No cheese"],sauce:["Regular","Extra","Light","No sauce"],pepperoni:["Regular","Extra","Light"]},C.options||{});
 const lines=[];let qn=1;const opt=a=>a.map(x=>`<option>${x}</option>`).join("");
 $("#pie").innerHTML=PIES.map(p=>`<option value="${p.id}">${p.n}</option>`).join("");
@@ -81,10 +81,19 @@ finally{b.disabled=false;b.classList.remove("loading");b.textContent="Place orde
 $("#again").onclick=()=>{lines.length=0;$("#orderForm").reset();syncB();render();$("#done").hidden=true;$("#orderForm").hidden=false};
 $("#copy").onclick=async()=>{const m=build();if(!m)return;try{await navigator.clipboard.writeText(m)}catch(e){$("#msg").select();document.execCommand("copy")}
 toast("Message copied!")};
+function goOrder(){$("#order").scrollIntoView({behavior:"smooth",block:"start"})}
+function quick(id,o){o=o||{};if(id=="byo"){$("#pie").value="byo";document.querySelectorAll("#tops input").forEach(x=>x.checked=(o.tops||[]).includes(x.value));syncB();if(o.noScroll)toast("Build your own set up in the order form");else goOrder();return}
+const crust=o.crust&&O.crust.includes(o.crust)?o.crust:O.crust[0];const l={id,tops:[],pep:isPep(id,[])?O.pepperoni[0]:"",crust,cheese:O.cheese[0],sauce:O.sauce[0],qty:1,price:unitPrice(id,[])};
+const same=lines.find(x=>x.id==l.id&&x.crust==l.crust&&x.cheese==l.cheese&&x.sauce==l.sauce&&x.pep==l.pep&&x.tops.join()==l.tops.join());if(same)same.qty++;else lines.push(l);render();if(!o.noScroll)goOrder();toast("Added to order")}
+function clicky(el,fn){el.addEventListener("click",e=>{const t=e.target.closest("[data-pie]");if(t)fn(t)});el.addEventListener("keydown",e=>{const t=e.target.closest("[data-pie]");if(t&&(e.key=="Enter"||e.key==" ")){e.preventDefault();fn(t)}})}
+function showPhoto(id){const f=document.querySelector(`#photoGrid figure[data-pie="${id}"]`);if(!f||id=="byo")return quick(id);
+document.querySelectorAll("#photoGrid .hl").forEach(x=>x.classList.remove("hl"));f.scrollIntoView({behavior:"smooth",block:"center"});f.classList.add("hl");f.focus({preventScroll:true});setTimeout(()=>f.classList.remove("hl"),2200)}
+clicky($("#menuGrid"),t=>showPhoto(t.dataset.pie));
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
 const S=C.socials||{};$("#socials").innerHTML=Object.entries(S).filter(([k,v])=>v).map(([k,v])=>`<a href="${v}" target="_blank" rel="noopener">${k[0].toUpperCase()+k.slice(1)}</a>`).join(" · ");
 syncB();render();
 if(C.email){const e=$("#femail");e.textContent=C.email;e.href="mailto:"+C.email;e.hidden=false}
 const PH=(C.photos||[]).filter(p=>p&&p.src);if(PH.length){$("#photos").hidden=false;
-$("#photoGrid").innerHTML=PH.map(p=>`<figure>${p.placeholder?'<div class="ph"></div>':`<img src="${p.src}" alt="${p.caption||"Pizza from "+NAME}" loading="lazy">`}${p.caption?`<figcaption>${p.caption}</figcaption>`:""}</figure>`).join("")}
+$("#photoGrid").innerHTML=PH.map((p,i)=>{const ok=p.pie&&PIES.some(x=>x.id==p.pie);return `<figure${ok?` class="pclick" role="button" tabindex="0" data-pie="${p.pie}" data-i="${i}" aria-label="${p.pie=="byo"?"Build your own: "+p.caption:"Add 1 "+(p.caption||"")+" to order"}"`:""}>${p.placeholder?'<div class="ph"></div>':`<img src="${p.src}" alt="${p.caption||"Pizza from "+NAME}" loading="lazy">`}${p.caption?`<figcaption>${p.caption}</figcaption>`:""}</figure>`}).join("");
+clicky($("#photoGrid"),t=>{const p=PH[+t.dataset.i];quick(p.pie,Object.assign({noScroll:1},p))})}
 let _n=0;document.querySelectorAll("section:not([hidden]) .num").forEach(e=>e.textContent=String(++_n).padStart(2,"0"));
