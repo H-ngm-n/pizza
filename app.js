@@ -1,3 +1,5 @@
+// Stale-cache guard: if the cached page is older than this script, reload once with fresh files.
+(function(){const need=["o-bake","wd","paddr","day","tops","unit","e-add","totalRow"];if(need.some(id=>!document.getElementById(id))){try{if(!sessionStorage.getItem("pzReload")){sessionStorage.setItem("pzReload","1");const u=new URL(location.href);u.searchParams.set("r",Date.now());location.replace(u.href);throw new Error("stale page, reloading")}}catch(e){if(/stale/.test(e.message))throw e}}else{try{sessionStorage.removeItem("pzReload")}catch(e){}}})();
 const C=window.PIZZA_CONFIG||{};const NAME=C.name||"Roman's Pizza";
 const PIES=[
 {id:"pepperoni",n:"Pepperoni",d:"Crispy, cupped pepperoni that curls into little grease-kissed bowls over melty mozzarella and bright tomato sauce."},
@@ -22,7 +24,8 @@ const pr=id=>id=="byo"?unitPrice("byo",[]):unitPrice(id);
 $("#menuGrid").innerHTML=PIES.map(p=>`<li><div class="mitem" role="button" tabindex="0" data-pie="${p.id}" aria-label="${p.id=="byo"?"Build your own pizza":"See "+p.n}"><div class="mrow"><h3>${p.n}</h3><span class="dots"></span><span class="mprice">${p.id=="byo"?"from "+money(pr(p.id)):money(pr(p.id))}</span></div><p>${p.d}</p></div></li>`).join("");
 const O=Object.assign({crust:["Regular"],bake:["Regular","Well done"],cheese:["Regular","Extra","Light","No cheese"],sauce:["Regular","Extra","Light","No sauce"],pepperoni:["Regular","Extra","Light"]},C.options||{});
 const lines=[];let qn=1;const cnt=()=>lines.reduce((a,l)=>a+l.qty,0);
-function capOk(add){if(cnt()+add<=MAX)return true;const left=MAX-cnt();$("#e-lines").textContent=`Sorry, max ${MAX} pizzas per order (one oven!).`+(left>0?` You can add ${left} more.`:"");toast(`Max ${MAX} pizzas per order`);return false}
+function addErr(m){$("#e-add").textContent=m||"";if(m)toast(m.split(".")[0])}
+function capOk(add){addErr("");if(cnt()+add<=MAX)return true;const left=MAX-cnt();addErr(`Can't add ${add}: max ${MAX} pizzas per order (one oven!).`+(left>0?` You can add ${left} more.`:" Remove one to add another."));$("#e-lines").textContent=`Sorry, max ${MAX} pizzas per order (one oven!).`+(left>0?` You can add ${left} more.`:"");toast(`Max ${MAX} pizzas per order`);return false}
 const opt=a=>a.map(x=>`<option>${x}</option>`).join("");
 $("#pie").innerHTML=PIES.map(p=>`<option value="${p.id}">${p.n}</option>`).join("");
 ["crust","bake","cheese","sauce","pepperoni"].forEach(k=>$("#o-"+k).innerHTML=opt(O[k]));
@@ -37,9 +40,10 @@ function desc(l){const d=[];if(l.id=="byo")return (l.tops.length?l.tops.map(t=>t
 function opts(l){const d=[];if(l.pep&&l.pep!==O.pepperoni[0])d.push(l.pep.toLowerCase()+" pepperoni");if(l.crust!==O.crust[0])d.push(l.crust.toLowerCase()+" crust");if(l.bake&&l.bake!==O.bake[0])d.push(l.bake.toLowerCase());
 if(l.cheese!==O.cheese[0])d.push(/^no /i.test(l.cheese)?l.cheese.toLowerCase():l.cheese.toLowerCase()+" cheese");
 if(l.sauce!==O.sauce[0])d.push(/^no /i.test(l.sauce)?l.sauce.toLowerCase():l.sauce.toLowerCase()+" sauce");return d.length?d.join(", "):"regular"}
-$("#add").onclick=()=>{if(!capOk(qn))return;const id=$("#pie").value,tops=id=="byo"?selTops():[];const l={id,tops,pep:isPep(id,tops)?$("#o-pepperoni").value:"",crust:$("#o-crust").value,bake:$("#o-bake").value,cheese:$("#o-cheese").value,sauce:$("#o-sauce").value,qty:qn,price:unitPrice(id,tops)};
+$("#add").onclick=()=>{try{addCur()}catch(x){console.error(x);addErr("Couldn't add that pizza. Please refresh the page and try again.")}};
+function addCur(){if(!capOk(qn))return;if(!$("#pie").value){addErr("Pick a pizza first.");return}const id=$("#pie").value,tops=id=="byo"?selTops():[];const l={id,tops,pep:isPep(id,tops)?$("#o-pepperoni").value:"",crust:$("#o-crust").value,bake:$("#o-bake").value,cheese:$("#o-cheese").value,sauce:$("#o-sauce").value,qty:qn,price:unitPrice(id,tops)};
 const same=lines.find(x=>x.id==l.id&&x.crust==l.crust&&x.bake==l.bake&&x.cheese==l.cheese&&x.sauce==l.sauce&&x.pep==l.pep&&x.tops.join()==l.tops.join());if(same)same.qty+=l.qty;else lines.push(l);
-qn=1;$("#qn").textContent=1;["crust","bake","cheese","sauce","pepperoni"].forEach(k=>$("#o-"+k).selectedIndex=0);document.querySelectorAll("#tops input").forEach(x=>x.checked=false);syncB();render();toast("Added to order")};
+qn=1;$("#qn").textContent=1;["crust","bake","cheese","sauce","pepperoni"].forEach(k=>$("#o-"+k).selectedIndex=0);document.querySelectorAll("#tops input").forEach(x=>x.checked=false);syncB();render();toast("Added to order")}
 function render(){$("#lines").innerHTML=lines.length?lines.map((l,i)=>{const p=PIES.find(x=>x.id==l.id);return `<li><div class="n"><b>${l.qty} × ${p.n}</b><small>${desc(l)}</small></div><span class="lt">${money(l.price*l.qty)}</span><button class="rm" data-i="${i}" aria-label="Remove">Remove</button></li>`}).join(""):'<li class="empty">Nothing yet. Build a pie and tap Add to order.</li>';upd()}
 $("#lines").onclick=e=>{const b=e.target.closest(".rm");if(b){lines.splice(+b.dataset.i,1);render()}};
 const times=C.pickupTimes||["12:00 PM","3:00 PM","6:00 PM"];$("#time").innerHTML=times.map(t=>`<option>${t}</option>`).join("");
