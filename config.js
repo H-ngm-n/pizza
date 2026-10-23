@@ -31,7 +31,7 @@ window.PIZZA_CONFIG = {
   },
   // Pricing rules (dollars). Crust/cheese/sauce/pepperoni-amount choices never change the price.
   // Price = (has pepperoni ? pepperoniBase : base) + perTopping x (toppings other than pepperoni).
-  pricing: { base: 14.99, pepperoniBase: 15.99, perTopping: 0.99 },
+  pricing: { base: 14.99, pepperoniBase: 15.99, perTopping: 1.00 },
   // What's on each menu pie, for pricing. "toppings" = extra toppings besides pepperoni.
   pies: {
     "cheese":                { pepperoni: false, toppings: [] },

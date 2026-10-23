@@ -13,7 +13,7 @@ if(C.tagline)document.querySelectorAll("[data-tagline]").forEach(e=>e.textConten
 if(C.area)document.querySelectorAll("[data-area]").forEach(e=>e.textContent=C.area);
 if(C.orderDeadline)document.querySelectorAll("[data-deadline]").forEach(e=>e.textContent=C.orderDeadline);
 $("#yr").textContent=new Date().getFullYear();
-const P=Object.assign({base:14.99,pepperoniBase:15.99,perTopping:0.99},C.pricing||{});const RCP=C.pies||{};const BYO=C.byoToppings||["Pepperoni","Banana peppers","Onion"];
+const P=Object.assign({base:14.99,pepperoniBase:15.99,perTopping:1.00},C.pricing||{});const RCP=C.pies||{};const BYO=C.byoToppings||["Pepperoni","Banana peppers","Onion"];
 const r2=x=>Math.round(x*100)/100;
 const isPep=(id,tops)=>id=="byo"?(tops||[]).includes("Pepperoni"):!!(RCP[id]&&RCP[id].pepperoni);
 function unitPrice(id,tops){if(id=="byo"){const t=tops||[];return r2((t.includes("Pepperoni")?P.pepperoniBase:P.base)+P.perTopping*t.filter(x=>x!="Pepperoni").length)}
